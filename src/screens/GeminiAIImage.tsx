@@ -74,8 +74,8 @@ const GeminiAIImage = () => {
                 </TouchableOpacity>
                 {state.imageAnalysis && (
                     <View className="bg-white p-5 rounded-lg shadow-lg mt-6">
-                        <Text className="text-xl font-semibold text-purple-700 mb-3">Analysis Results:</Text>
-                        <Text className="text-base text-gray-700">{state.imageAnalysis}</Text>
+                        <Text className="text-xl font-semibold text-purple-700 mb-3 text-right">Analysis Results:</Text>
+                        <Text className="text-base text-gray-700 text-right">{state.imageAnalysis}</Text>
                     </View>
                 )}
             </View>

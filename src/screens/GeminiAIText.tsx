@@ -48,12 +48,12 @@ const GeminiAIText = () => {
                 {state.response && (
                     <View className="mt-8 p-6 bg-gray-50 rounded-xl shadow-lg border border-gray-300">
                         <Text
-                            className={`font-bold text-2xl mb-4 text-purple-800 ${textDirection === 'rtl' ? 'text-left' : 'text-right'}`}
+                            className={`font-bold text-2xl mb-4 text-purple-800 text-right`}
                         >
                             Response:
                         </Text>
                         <Text
-                            className={`text-lg text-gray-800 leading-7 font-medium ${textDirection === 'rtl' ? 'text-left' : 'text-right'}`}
+                            className={`text-lg text-gray-800 leading-7 font-medium ${textDirection === 'ltr' ? 'text-right' : 'text-left'} ${textDirection === 'rtl' ? 'pr-4' : 'pl-4'}`}
                         >
                             {state.response}
                         </Text>

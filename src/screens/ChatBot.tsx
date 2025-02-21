@@ -27,16 +27,15 @@ const ChatBot: React.FC = () => {
       </ScrollView>
 
       {state.error && <Text className="text-red-500 mb-2 text-center">{state.error}</Text>}
-
       <View className="flex-row items-center">
-        <TextInput
-          value={message}
-          onChangeText={setMessage}
-          placeholder="Type a message..."
-          className={`flex-1 h-10 border border-gray-300 rounded-lg px-2 mr-2 ${animatedBorderStyle}`}
-        />
-    <ButtonText title="Send" onPress={handleSend} disabled={state.loading} />
-</View>
+      <TextInput
+        value={message}
+        onChangeText={setMessage}
+        placeholder="Type a message..."
+        className={`flex-1 h-12 border-2 border-gray-300 rounded-lg px-4 py-2 mr-2 text-lg ${animatedBorderStyle}`}
+      />
+      <ButtonText title="Send" onPress={handleSend} disabled={state.loading} />
+      </View>
     </View>
   );
 };

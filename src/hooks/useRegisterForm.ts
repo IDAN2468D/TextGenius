@@ -1,6 +1,7 @@
 import { useReducer } from 'react';
 import useAuth from './useAuth';
 
+// Types for possible actions
 type ActionType =
   | { type: 'SET_USERNAME'; payload: string }
   | { type: 'SET_EMAIL'; payload: string }
@@ -10,8 +11,10 @@ type ActionType =
   | { type: 'SET_EMAIL_ERROR'; payload: string }
   | { type: 'SET_PASSWORD_ERROR'; payload: string }
   | { type: 'SET_CONFIRM_PASSWORD_ERROR'; payload: string }
-  | { type: 'RESET_ERRORS' };
+  | { type: 'RESET_ERRORS' }
+  | { type: 'SET_EMAIL_EXISTS_ERROR'; payload: string };
 
+// Initial state structure
 interface RegisterState {
   username: string;
   email: string;
@@ -22,8 +25,10 @@ interface RegisterState {
   emailError: string;
   passwordError: string;
   confirmPasswordError: string;
+  emailExistsError: string;
 }
 
+// Reducer function for managing state
 const registerReducer = (state: RegisterState, action: ActionType): RegisterState => {
   switch (action.type) {
     case 'SET_USERNAME':
@@ -44,15 +49,18 @@ const registerReducer = (state: RegisterState, action: ActionType): RegisterStat
       return { ...state, passwordError: action.payload };
     case 'SET_CONFIRM_PASSWORD_ERROR':
       return { ...state, confirmPasswordError: action.payload };
+    case 'SET_EMAIL_EXISTS_ERROR':
+      return { ...state, emailExistsError: action.payload };
     case 'RESET_ERRORS':
-      return { ...state, emailError: '', passwordError: '', confirmPasswordError: '' };
+      return { ...state, emailError: '', passwordError: '', confirmPasswordError: '', emailExistsError: '' };
     default:
       return state;
   }
 };
 
 const useRegisterForm = () => {
-  const { register } = useAuth();
+  const { register, checkEmailExists, error, loading } = useAuth();
+
   const [state, dispatch] = useReducer(registerReducer, {
     username: '',
     email: '',
@@ -63,7 +71,9 @@ const useRegisterForm = () => {
     emailError: '',
     passwordError: '',
     confirmPasswordError: '',
+    emailExistsError: '', 
   });
+
 
   const handleRegister = async () => {
     dispatch({ type: 'RESET_ERRORS' });
@@ -72,14 +82,23 @@ const useRegisterForm = () => {
       console.error('Username is required');
       return;
     }
+
     if (!state.email) {
       dispatch({ type: 'SET_EMAIL_ERROR', payload: 'Email is required' });
       return;
     }
+
+    const emailExists = await checkEmailExists(state.email);
+    if (emailExists) {
+      dispatch({ type: 'SET_EMAIL_EXISTS_ERROR', payload: 'Email is already in use' });
+      return;
+    }
+
     if (!state.password) {
       dispatch({ type: 'SET_PASSWORD_ERROR', payload: 'Password is required' });
       return;
     }
+
     if (state.password !== state.confirmPassword) {
       dispatch({ type: 'SET_CONFIRM_PASSWORD_ERROR', payload: 'Passwords do not match' });
       return;
@@ -102,6 +121,7 @@ const useRegisterForm = () => {
     emailError: state.emailError,
     passwordError: state.passwordError,
     confirmPasswordError: state.confirmPasswordError,
+    emailExistsError: state.emailExistsError,
     setUsername: (username: string) => dispatch({ type: 'SET_USERNAME', payload: username }),
     setEmail: (email: string) => dispatch({ type: 'SET_EMAIL', payload: email }),
     setPassword: (password: string) => dispatch({ type: 'SET_PASSWORD', payload: password }),
@@ -110,6 +130,8 @@ const useRegisterForm = () => {
     togglePasswordVisibility: (field: 'password' | 'confirmPassword') =>
       dispatch({ type: 'TOGGLE_PASSWORD_VISIBILITY', payload: field }),
     handleRegister,
+    loading,
+    error,
   };
 };
 

@@ -7,6 +7,7 @@ import ChatBot from '../screens/ChatBot';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Settings from '../screens/Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,6 +64,15 @@ export default function GeminiAITabs() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="wechat" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="setting" color={color} size={size} />
           ),
         }}
       />

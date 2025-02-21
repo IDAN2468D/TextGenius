@@ -20,6 +20,7 @@ const RegisterScreen = ({ navigation }: any) => {
     setConfirmPassword,
     togglePasswordVisibility,
     handleRegister,
+    emailExistsError
   } = useRegisterForm();
 
   return (
@@ -47,28 +48,29 @@ const RegisterScreen = ({ navigation }: any) => {
         onChangeText={setEmail}
       />
       {emailError && <Text className="text-red-500 text-sm mb-2">{emailError}</Text>}
+      {emailExistsError && <Text className="text-red-500 text-sm mb-2">{emailExistsError}</Text>}
 
       {/* Password Input Field */}
-    <View className="relative w-full mb-4">
+      <View className="relative w-full mb-4">
         <TextInput
-            className="w-full h-12 bg-gray-800 rounded-lg px-4 text-white text-base pl-4"
-            placeholder="Enter your password"
-            placeholderTextColor="#888"
-            secureTextEntry={passwordSecureText}
-            value={password}
-            onChangeText={setPassword}
+          className="w-full h-12 bg-gray-800 rounded-lg px-4 text-white text-base pl-4"
+          placeholder="Enter your password"
+          placeholderTextColor="#888"
+          secureTextEntry={passwordSecureText}
+          value={password}
+          onChangeText={setPassword}
         />
         <TouchableOpacity
-            className="absolute left-4 top-3"
-            onPress={() => togglePasswordVisibility('password')}
+          className="absolute left-4 top-3"
+          onPress={() => togglePasswordVisibility('password')}
         >
-        <Icon
+          <Icon
             name={passwordSecureText ? 'eye-off' : 'eye'}
             size={22}
             color="#888"
-        />
+          />
         </TouchableOpacity>
-    </View>
+      </View>
       {passwordError && <Text className="text-red-500 text-sm mb-2">{passwordError}</Text>}
 
       {/* Confirm Password Input Field */}

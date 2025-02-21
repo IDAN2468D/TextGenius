@@ -130,6 +130,7 @@ const useAuth = () => {
         headers: { Authorization: `Bearer ${token}` },
         body: JSON.stringify({ email: user.email }),
       });
+
       if (response.ok) {
         await Promise.all([
           AsyncStorage.removeItem('userToken'),
@@ -149,7 +150,30 @@ const useAuth = () => {
     }
   };
 
-  return { user, token, loading, error, register, login, updatePassword, deleteUser };
+    // Add a function to check if the email exists
+    const checkEmailExists = async (email: string) => {
+      try {
+        const response = await fetch('http://192.168.1.199:5000/api/auth/check-email', { 
+          method: 'POST',
+          body: JSON.stringify({ email }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        const result = await response.json();
+        if (result.exists) {
+          return true;
+        }
+        return false;
+      } catch (err) {
+        console.error('Error checking email existence:', err);
+        return false;
+      }
+    };
+  
+
+  return { user, token, loading, error, register, login, updatePassword, deleteUser, checkEmailExists };
 };
 
 export default useAuth;
