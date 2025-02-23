@@ -60,7 +60,7 @@ export const useMultimodalForm = () => {
         }
 
         try {
-            const response = await fetch("http://192.168.1.199:5000/api/gemini/multimodal", {
+            const response = await fetch("https://gemini-api-production-e6a2.up.railway.app/api/gemini/multimodal", {
                 method: "POST",
                 body: formData,
                 headers: {

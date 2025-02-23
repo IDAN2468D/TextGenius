@@ -57,7 +57,7 @@ const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://192.168.1.199:5000/api/auth/register', {
+      const response = await fetch('https://gemini-api-production-e6a2.up.railway.app/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, username }),
@@ -75,7 +75,7 @@ const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://192.168.1.199:5000/api/auth/login', {
+      const response = await fetch('https://gemini-api-production-e6a2.up.railway.app/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -99,7 +99,7 @@ const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://192.168.1.199:5000/api/auth/update-password', {
+      const response = await fetch('https://gemini-api-production-e6a2.up.railway.app/api/auth/update-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ const useAuth = () => {
     }
     setLoading(true);
     try {
-      const response = await fetch('http://192.168.1.199:5000/api/auth/delete-user', {
+      const response = await fetch('https://gemini-api-production-e6a2.up.railway.app/api/auth/delete-user', {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
         body: JSON.stringify({ email: user.email }),
@@ -153,7 +153,7 @@ const useAuth = () => {
     // Add a function to check if the email exists
     const checkEmailExists = async (email: string) => {
       try {
-        const response = await fetch('http://192.168.1.199:5000/api/auth/check-email', { 
+        const response = await fetch('https://gemini-api-production-e6a2.up.railway.app/api/auth/check-email', { 
           method: 'POST',
           body: JSON.stringify({ email }),
           headers: {

@@ -76,7 +76,7 @@ export function useChat() {
     dispatch({ type: 'SEND_MESSAGE' });
 
     try {
-      const result = await axios.post('http://192.168.1.199:5000/api/gemini/bot-response', {
+      const result = await axios.post('https://gemini-api-production-e6a2.up.railway.app/api/gemini/bot-response', {
         prompt: message,
       });
 

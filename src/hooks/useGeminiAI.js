@@ -70,7 +70,7 @@ const useGeminiAI = () => {
         dispatch({ type: actionTypes.SET_LOADING, payload: true });
 
         try {
-            const { data } = await axios.post('http://192.168.1.199:5000/api/gemini/generate', { prompt: state.prompt });
+            const { data } = await axios.post('https://gemini-api-production-e6a2.up.railway.app/api/gemini/generate', { prompt: state.prompt });
             dispatch({ type: actionTypes.SET_RESPONSE, payload: data.text });
         } catch (err) {
             dispatch({ type: actionTypes.SET_ERROR, payload: err.response?.data?.error || 'Error processing the request' });
@@ -100,7 +100,7 @@ const useGeminiAI = () => {
             // Log the formData content
             console.log('FormData being sent:', formData);
     
-            const { data } = await axios.post('http://192.168.1.199:5000/api/gemini/analyze-image', formData, {
+            const { data } = await axios.post('https://gemini-api-production-e6a2.up.railway.app/api/gemini/analyze-image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
     
